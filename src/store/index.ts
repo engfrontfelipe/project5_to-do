@@ -1,16 +1,15 @@
-import { configureStore } from "@reduxjs/toolkit"; 
+import { configureStore } from "@reduxjs/toolkit";
 
-import TaskReducer from './reducers/tasks'
+import TaskReducer from "./reducers/tasks";
+import filterReducer from "./reducers/filters"
 
 const store = configureStore({
-    reducer:{
-        tasks: TaskReducer
+  reducer: {
+    tasks: TaskReducer,
+    filter: filterReducer
+  },
+});
 
-    }
-
-})
-
-
-export type RootReducer = ReturnType<typeof store.getState>
+export type RootReducer = ReturnType<typeof store.getState>;
 
 export default store;

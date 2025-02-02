@@ -1,43 +1,61 @@
-import { createSlice,PayloadAction } from "@reduxjs/toolkit";
-import Task from "../../models/Task";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import * as enums from "../../utils/enums/Tasks";
+
+type Task = {
+  title: string;
+  priority: enums.PriorityEnum;
+  status: enums.StatusEnum;
+  description: string;
+  id: number;
+};
+
+const initialState: Task[] = [
+  {
+    title: "Estudar Js",
+    priority: enums.PriorityEnum.IMPORTANT,
+    status: enums.StatusEnum.PENDENTE,
+    description: "",
+    id: 1,
+  },
+  {
+    title: "Estudar Ts",
+    priority: enums.PriorityEnum.URGENT,
+    status: enums.StatusEnum.PENDENTE,
+    description: "Rever aula 2 do módulo.",
+    id: 2,
+  },
+  {
+    title: "Estudar React.Js",
+    priority: enums.PriorityEnum.URGENT,
+    status: enums.StatusEnum.CONCLUIDA,
+    description: "Praticar useEffect.",
+    id: 3,
+  },
+
+  {
+    title: "Estudar Redux",
+    priority: enums.PriorityEnum.NORMAL,
+    status: enums.StatusEnum.CONCLUIDA,
+    description: "Praticar useDispatch.",
+    id: 4,
+  },
+];
 
 const tasksSlice = createSlice({
-    name: 'tasks',
-    initialState: [
-        new Task(
-            'Estudar Js',
-            'importante',
-            'pendente',
-            '',
-            1
-        ),
+  name: "tasks",
+  initialState,
+  reducers: {
+    remove: (state, action: PayloadAction<number>) => {
+      return state.filter((task) => task.id !== action.payload);
+    },
+    edit: (state, action: PayloadAction<Task>) => {
+      const indexForTask = state.findIndex((t) => t.id === action.payload.id);
+      if (indexForTask >= 0) {
+        state[indexForTask] = action.payload;
+      }
+    },
+  },
+});
 
-        new Task(
-            'Estudar Ts',
-            'urgente',
-            'pendente',
-            'Rever aula 2 do módulo.',
-            2
-        ),
-
-        new Task(
-            'Estudar React.Js',
-            'urgente',
-            'concluída',
-            'Praticar useEffect.',
-            3
-        )
-    ],
-    reducers: {
-        remove: (state, action: PayloadAction<number>)=>{
-            state = state.filter((task) => task.id !== action.payload)
-        }
-
-    }
-
-})
-
-export const { remove } = tasksSlice.actions;
-
+export const { remove, edit } = tasksSlice.actions;
 export default tasksSlice.reducer;
-  

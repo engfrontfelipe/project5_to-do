@@ -1,28 +1,75 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as S from "./styles";
 
+import * as enums from "../../utils/enums/Tasks";
+import { useDispatch } from "react-redux";
+
+import { remove, edit } from "../../store/reducers/tasks";
 
 type Props = {
   title: string;
-  priority: string;
-  status: string;
+  priority: enums.PriorityEnum;
+  status: enums.StatusEnum;
   description: string;
+  id: number;
 };
 
-const Task = ({ title, priority, status, description }: Props) => {
+const Task = ({
+  title,
+  priority,
+  status,
+  description: originalDescription,
+  id,
+}: Props) => {
   const [isEditing, setIsEditing] = useState(false);
+  const dispatch = useDispatch();
+  const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    if (originalDescription.length > 0) {
+      setDescription(originalDescription);
+    }
+  }, [originalDescription]);
+
+  function cancelEdit() {
+    setDescription(originalDescription);
+    setIsEditing(false);
+  }
 
   return (
     <S.Card>
       <S.Title>{title}</S.Title>
-      <S.Tag priority={priority}>{priority}</S.Tag>
-      <S.Tag status={status}>{status}</S.Tag>
-      <S.Description value={description} />
+      <S.Tag parameter="prioridade" priority={priority}>
+        {priority}
+      </S.Tag>
+      <S.Tag parameter="status" status={status}>
+        {status}
+      </S.Tag>
+      <S.Description
+        disabled={!isEditing}
+        value={description}
+        onChange={(event) => setDescription(event.target.value)}
+      />
       <S.ActionBar>
         {isEditing ? (
           <>
-            <S.ButtonSave>Salvar</S.ButtonSave>
-            <S.ButtonCancelAndRemove onClick={() => setIsEditing(false)}>
+            <S.ButtonSave
+              onClick={() => {
+                dispatch(
+                  edit({
+                    description,
+                    id,
+                    status,
+                    title,
+                    priority,
+                  }),
+                );
+                setIsEditing(false)
+              }}
+            >
+              Salvar
+            </S.ButtonSave>
+            <S.ButtonCancelAndRemove onClick={cancelEdit}>
               Cancelar
             </S.ButtonCancelAndRemove>
           </>
@@ -31,7 +78,9 @@ const Task = ({ title, priority, status, description }: Props) => {
             <S.PrimaryButton onClick={() => setIsEditing(true)}>
               Editar
             </S.PrimaryButton>
-            <S.ButtonCancelAndRemove>Remover</S.ButtonCancelAndRemove>
+            <S.ButtonCancelAndRemove onClick={() => dispatch(remove(id))}>
+              Remover
+            </S.ButtonCancelAndRemove>
           </>
         )}
       </S.ActionBar>
