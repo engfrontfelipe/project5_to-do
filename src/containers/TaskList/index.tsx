@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 
 import Task from "../../components/Task";
-import { Container } from "./styles";
+import { Container, Result } from "./styles";
 
 import { RootReducer } from "../../store";
 const TaskList = () => {
@@ -19,33 +19,43 @@ const TaskList = () => {
       );
     }
 
-      if (criterium === "prioridade") {
-        return (filteredTask = filteredTask.filter(
-          (item) => item.priority === value
-        ));
-      } else if (criterium === "status") {
-        return (filteredTask = filteredTask.filter(
-          (item) => item.status === value
-        ));
-      }
+    if (criterium === "prioridade") {
+      return (filteredTask = filteredTask.filter(
+        (item) => item.priority === value,
+      ));
+    } else if (criterium === "status") {
+      return (filteredTask = filteredTask.filter(
+        (item) => item.status === value,
+      ));
+    }
 
-      return filteredTask;
-    
+    return filteredTask;
   };
+
+  const taskFilterExport = filterTasks();
+
+  function verifyMessage() {
+    if (taskFilterExport.length >= 2) {
+      return "s";
+    } else {
+      return "";
+    }
+  }
+
+  function verifyTextForMessage(amount: number) {
+    if (criterium === "todas") {
+      return `O total é de ${amount} tarefas.`;
+    } else {
+      return `${amount} tarefa${verifyMessage()} marcada${verifyMessage()} como: ${value}`;
+    }
+  }
 
   return (
     <Container>
-      <p>
-        {filterTasks().length} tarefas marcadas como: 'categoria' e {term}
-      </p>
-      <ul>
-        <li>{term}</li>
-        <li>{criterium}</li>
-        <li>{value}</li>
-      </ul>
+      <Result>{verifyTextForMessage(taskFilterExport.length)}</Result>
 
       <ul>
-        {filterTasks().map((t) => (
+        {taskFilterExport.map((t) => (
           <li key={Math.random()}>
             <Task
               id={t.id}

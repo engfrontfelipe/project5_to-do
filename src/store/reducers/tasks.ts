@@ -34,11 +34,12 @@ const initialState: Task[] = [
 
   {
     title: "Estudar Redux",
-    priority: enums.PriorityEnum.NORMAL,
+    priority: enums.PriorityEnum.URGENT,
     status: enums.StatusEnum.CONCLUIDA,
     description: "Praticar useDispatch.",
     id: 4,
   },
+
 ];
 
 const tasksSlice = createSlice({
