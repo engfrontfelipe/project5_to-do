@@ -5,6 +5,7 @@ import * as enums from "../../utils/enums/Tasks";
 import { useDispatch } from "react-redux";
 
 import { remove, edit } from "../../store/reducers/tasks";
+import { ButtonSave } from "../../styles";
 
 type Props = {
   title: string;
@@ -53,7 +54,7 @@ const Task = ({
       <S.ActionBar>
         {isEditing ? (
           <>
-            <S.ButtonSave
+            <ButtonSave
               onClick={() => {
                 dispatch(
                   edit({
@@ -68,7 +69,7 @@ const Task = ({
               }}
             >
               Salvar
-            </S.ButtonSave>
+            </ButtonSave>
             <S.ButtonCancelAndRemove onClick={cancelEdit}>
               Cancelar
             </S.ButtonCancelAndRemove>

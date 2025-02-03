@@ -5,15 +5,17 @@ import { RootReducer } from "../../store";
 import * as S from "./styles";
 import { altern } from "../../store/reducers/filters";
 import * as enums from "../../utils/enums/Tasks";
+import { Field } from "../../styles";
 
 const SideBar = () => {
   const dispatch = useDispatch();
   const { term } = useSelector((state: RootReducer) => state.filter);
+  
 
   return (
     <S.Aside>
       <div>
-        <S.Field
+        <Field
           type="text"
           placeholder="Buscar"
           value={term}

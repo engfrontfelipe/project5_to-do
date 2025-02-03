@@ -1,15 +1,17 @@
+import { PriorityEnum, StatusEnum } from "../utils/enums/Tasks"
+
 class Task{
     title: string
-    priority: string
-    status: string
+    priority: PriorityEnum
+    status: StatusEnum
     description: string
     id: number
     static id: any
 
     constructor(
         title: string,
-        priority: string,
-        status: string,
+        priority: PriorityEnum,
+        status: StatusEnum,
         description: string,
         id: number
     ){

@@ -73,11 +73,6 @@ export const PrimaryButton = styled.button`
   margin-right: 8px;
 `;
 
-export const ButtonSave = styled(PrimaryButton)`
-  background-color: ${variables.green};
-  border-color: ${variables.green};
-`;
-
 export const ButtonCancelAndRemove = styled(PrimaryButton)`
   background-color: ${variables.red};
   border-color: ${variables.red};

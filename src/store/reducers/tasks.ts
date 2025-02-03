@@ -39,7 +39,6 @@ const initialState: Task[] = [
     description: "Praticar useDispatch.",
     id: 4,
   },
-
 ];
 
 const tasksSlice = createSlice({
@@ -55,8 +54,19 @@ const tasksSlice = createSlice({
         state[indexForTask] = action.payload;
       }
     },
+    register: (state, action: PayloadAction<Task>) => {
+      const existTask = state.find(
+        (task) =>
+          task.title.toLowerCase() === action.payload.title.toLowerCase(),
+      );
+      if (existTask) {
+        alert("Já existe uma tarefa com esse nome.");
+      } else {
+        state.push(action.payload);
+      }
+    },
   },
 });
 
-export const { remove, edit } = tasksSlice.actions;
+export const { remove, edit, register } = tasksSlice.actions;
 export default tasksSlice.reducer;

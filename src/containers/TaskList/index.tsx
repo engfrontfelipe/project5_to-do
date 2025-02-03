@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 
 import Task from "../../components/Task";
-import { Container, Result } from "./styles";
+import { MainContainer, Title } from "../../styles";
 
 import { RootReducer } from "../../store";
 const TaskList = () => {
@@ -51,8 +51,8 @@ const TaskList = () => {
   }
 
   return (
-    <Container>
-      <Result>{verifyTextForMessage(taskFilterExport.length)}</Result>
+    <MainContainer>
+      <Title as="p">{verifyTextForMessage(taskFilterExport.length)}</Title>
 
       <ul>
         {taskFilterExport.map((t) => (
@@ -67,7 +67,7 @@ const TaskList = () => {
           </li>
         ))}
       </ul>
-    </Container>
+    </MainContainer>
   );
 };
 
