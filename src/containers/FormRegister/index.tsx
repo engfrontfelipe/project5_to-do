@@ -5,13 +5,12 @@ import { Field, MainContainer, Title } from "../../styles";
 import { FormStyle, Options } from "./styles";
 import * as enums from "../../utils/enums/Tasks";
 import { ButtonSave } from "../../styles";
-import Task from "../../models/Task";
 import { register } from "../../store/reducers/tasks";
 import { useNavigate } from "react-router-dom";
 
 const Form = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -19,16 +18,16 @@ const Form = () => {
 
   const registerTask = (event: FormEvent) => {
     event.preventDefault();
-    const taskForAdd = new Task(
-      title,
-      priority,
-      enums.StatusEnum.PENDENTE,
-      description,
-      9,
+    dispatch(
+      register({
+        title,
+        priority,
+        description,
+        status: enums.StatusEnum.PENDENTE,
+      }),
     );
-
-    dispatch(register(taskForAdd))
-    navigate('/')
+    alert("Tarefa Registrada com Sucesso.");
+    navigate("/");
   };
 
   return (
